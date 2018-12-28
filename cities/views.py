@@ -1,14 +1,16 @@
 from django.shortcuts import render
 from django.views.generic.detail import DetailView
+from django.views.generic.edit import CreateView
+from django.urls import reverse_lazy
 from .models import City
-from .forms import HtmlForm
+from .forms import CityForm
 
 def home(request):
     if request.method == 'POST':
-        form = HtmlForm(request.POST or None)
+        form = CityForm(request.POST or None)
         if form.is_valid():
             print(form.cleaned_data)
-    form = HtmlForm()
+    form = CityForm()
     # print(request.POST)
     city = request.POST.get('name')
     # print(city)
@@ -20,4 +22,11 @@ class CityDetailView(DetailView):
     queryset = City.objects.all()
     context_object_name = 'object'
     template_name = 'cities/detail.html'
+
+
+class CityCreateView(CreateView):
+    model = City
+    form_class = CityForm
+    template_name = 'cities/create.html'
+    success_url = reverse_lazy('city:home')
     
