@@ -5,15 +5,30 @@
     <h1 class="display-4">Города</h1>
     <div class="row">      
         <div class='col-md-6'>
+            <table class='table table-striped'>
+            <tbody>
             {% for object in objects_list%}
-                <p> {{object.name}} </p>
+                <tr>
+                <td> <a href='{% url "city:detail" pk=object.id%}'> {{object.name}} </a> </td>
+                <td> <a href='{% url "city:update" pk=object.id%}'> 
+                    <button type='button' class='btn btn-primary'>Редактировать 
+                    </button></a> 
+                </td>
+                <td> <a href='{% url "city:delete" pk=object.id%}'>
+                    <button type='button' class='btn btn-danger'> Удалить 
+                    </button></a> 
+                </td>
+                </tr>
             {% endfor %}
+             </tbody>
+             </table> 
         </div>
     </div>
 
+<a href='{% url "city:add" %}'> Добавить </a>
+{% endblock%}
 <form action="" method="post"> {% csrf_token %} 
  {{form.as_p}}
  <br>
   <input type="submit" value="Сохранить">
 </form>
-{% endblock%}
