@@ -10,4 +10,10 @@
             {% endfor %}
         </div>
     </div>
+
+<form action="" method="post"> {% csrf_token %} 
+ {{form.as_p}}
+ <br>
+  <input type="submit" value="Сохранить">
+</form>
 {% endblock%}
