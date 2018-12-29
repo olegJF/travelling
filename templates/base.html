@@ -53,6 +53,29 @@
   </div>
 </nav>
 </div>
+  <div class="container my-4">
+		<div class="row">
+			<div class="col-md-8 mx-auto">
+			  {% if messages %}
+          {% for message in messages %}
+            {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+              <div class="alert alert-danger messages">
+                <span{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+                Внимание!  {{ message }}<br/>
+                </span>
+              </div>
+            {%else %} 
+              <div class="alert alert-success messages">
+                <span{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+                {{ message }}<br/>
+                </span>
+              </div>
+            {% endif %}
+          {% endfor %}
+			  {% endif %}
+			</div>
+		</div>
+     </div>
     <div class='container'>
    {% block content%} {% endblock%}
     </div>
