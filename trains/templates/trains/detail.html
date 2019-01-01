@@ -4,14 +4,65 @@
  {% block content%}
     <h1 class="display-4">Город</h1>
     <div class="row">      
-        <div class='col-md-6'>
-            <p>Название города: {{object.name}} </p>
+        <div class='col-md-8'>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th> Номер поезда</th>
+                    <th> Откуда</th>
+                    <th> Куда</th>
+                    <th> Время в пути</th>
+                    <th> &nbsp;</th>
+                    <th> &nbsp;</th>
+                </tr>
+                </thead>
+                <tbody>
+               
+                    <tr>
+                    <td> 
+                        <a href=''> 
+                            {{object.name}} 
+                        </a> 
+                    </td>
+                    <td> 
+                        
+                            {{object.from_city}} 
+                       
+                    </td>
+                    <td> 
+                        
+                            {{object.to_city}} 
+                     
+                    </td>
+                    <td> 
+                       
+                            {{object.travel_time}} 
+                        
+                    </td>
+                    <td> 
+                        <a href='{% url "train:update" pk=object.pk %}'>
+                            <button type="button" class="btn btn-primary btn-sm"> 
+                                Редактировать
+                            </button> 
+                        </a> 
+                    </td>
+                    <td> 
+                        <a href='{% url "train:delete" pk=object.pk %}'> 
+                            <button type="button" class="btn btn-danger btn-sm">
+                                Удалить 
+                            </button>
+                        </a> 
+                    </td>
+                    </tr>
+                    
+                </tbody>
+            </table>
             
         </div>
     </div>
     <div class="row">      
         <div class='col-md-6'>
-            <a href='{% url "city:home"%}'>
+            <a href='{% url "train:home"%}'>
             <button type='button' class='btn btn-light'>
             Назад к списку
             </button>
