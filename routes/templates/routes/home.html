@@ -5,7 +5,7 @@
     <h1 class="display-4 text-center my-4">Поиск маршрута</h1>
     <div class="row ">      
         <div class='col-md-8 mx-auto'>
-           <form action="" method="post"> {% csrf_token %} 
+           <form action="{% url 'find_routes' %}" method="post"> {% csrf_token %} 
                 {{form.as_p}}
                 <input type="submit" value="Найти">
             </form> 
