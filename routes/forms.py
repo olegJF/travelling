@@ -9,7 +9,7 @@ class RouteForm(forms.Form):
     across_cities = forms.ModelMultipleChoiceField(label='Через города', queryset=City.objects.all(),
                                 required=False,
                                 widget=forms.SelectMultiple(attrs={'class': 'form-control js-example-basic-multiple'}))
-    traveling_time = forms.IntegerField(label='Поезд', 
+    travelling_time = forms.IntegerField(label='Поезд', 
                             widget=forms.NumberInput(
                                 attrs={'class': 'form-control',
                                 'placeholder': 'Время в пути'}))

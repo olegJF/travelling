@@ -3,8 +3,42 @@
 
 {% block content%}
     <h1 class="display-4 text-center my-4">Поиск маршрута</h1>
-    <div class="row ">      
+    <div class="row "> 
+        {% if routes %}
+            <div class='col-md-8 mx-auto'>
+            <h3> Маршруты из {{cities.from_city}} в {{cities.to_city}} </h3>
+            <hr>
+            {% for route in routes %}
+                {% if forloop.first %}
+                    <h5> Самый короткий маршрут </h5>
+                {% endif %}
+                <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th> Список поездов</th>
+                    
+                </tr>
+                </thead>
+                <tbody>
+                {% for train in route.route %}
+                    <tr>
+                        <td> Поезд №{{train.name}} , следующий из {{train.from_city}} , в  {{train.to_city}}. 
+                        Время в пути {{train.travel_time}} </td>
+                    </tr>
+                
+                {% endfor %}
+                </tbody>
+                </table>
+                <p>Общее время в пути {{route.total_time}} </p>
+                <br/><br/><br/>
+
+               
+            {% endfor %}
+            
+             </div>
+        {% endif %}     
         <div class='col-md-8 mx-auto'>
+            {{ways}}
            <form action="{% url 'find_routes' %}" method="post"> {% csrf_token %} 
                 {{form.as_p}}
                 <input type="submit" value="Найти">
