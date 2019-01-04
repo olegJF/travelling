@@ -6,9 +6,20 @@
     <div class="row "> 
         {% if routes %}
             <div class='col-md-8 mx-auto'>
-            <h3> Маршруты из {{cities.from_city}} в {{cities.to_city}} </h3>
+            <h3> {% if routes|length == 1%}
+                    Маршрут
+                {% else %}
+                    Маршруты
+                {% endif %} из г.{{cities.from_city}} в г.{{cities.to_city}} </h3>
             <hr>
             {% for route in routes %}
+                <form action="{% url 'add_route' %}" method="get">
+                    <input type='hidden' name='from_city' value='{{route.from_city}}'/>
+                    <input type='hidden' name='to_city' value='{{route.to_city}}'/>
+                    <input type='hidden' name='travel_times' value='{{route.total_time}}'/>
+                    <input type='hidden' name='across_cities' 
+                        value='{% for train in route.route %} {{train.id}} {% endfor %}'/>
+
                 {% if forloop.first %}
                     <h5> Самый короткий маршрут </h5>
                 {% endif %}
@@ -22,7 +33,7 @@
                 <tbody>
                 {% for train in route.route %}
                     <tr>
-                        <td> Поезд №{{train.name}} , следующий из {{train.from_city}} , в  {{train.to_city}}. 
+                        <td> Поезд <strong> №{{train.name}}</strong> , следующий из {{train.from_city}} , в  {{train.to_city}}. 
                         Время в пути {{train.travel_time}} </td>
                     </tr>
                 
@@ -30,7 +41,10 @@
                 </tbody>
                 </table>
                 <p>Общее время в пути {{route.total_time}} </p>
-                <br/><br/><br/>
+                <br/>
+                <button type='submit' class='btn btn-success'>Сохранить маршрут </button>
+                </form>
+                <br/><br/>
 
                
             {% endfor %}
