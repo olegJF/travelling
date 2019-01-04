@@ -109,7 +109,23 @@ def find_routes(request):
 
 def add_route(request):
     if request.method == 'POST':
-        pass
+        form = RouteModelForm(request.POST or None)
+        if form.is_valid():
+            data = form.cleaned_data
+            name = data['name']
+            travel_times = data['travel_times']
+            from_city = data['from_city']
+            to_city = data['to_city']
+            across_cities = data['across_cities'].split(' ')
+            trains = [int(x) for x in across_cities if x.isalnum()]
+            qs = Train.objects.filter(id__in=trains)
+            route = Route(name=name, from_city=from_city, 
+                    to_city=to_city, travel_times=travel_times)
+            route.save()
+            for tr in qs:
+                route.across_cities.add(tr.id)
+            messages.success(request, 'Маршрут был успешно сохранен.')
+            return redirect('/')
     else:
         data = request.GET
         if data:
