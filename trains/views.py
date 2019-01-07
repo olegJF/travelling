@@ -9,6 +9,7 @@ from django.urls import reverse_lazy
 from .models import Train
 from .forms import TrainForm
 
+
 def home(request):
     trains = Train.objects.all()
     paginator = Paginator(trains, 10)
@@ -24,6 +25,7 @@ class TrainCreateView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
     template_name = 'trains/create.html'
     success_url = reverse_lazy('train:home')
     success_message = 'Поезд успешно создан!'
+
 
 class TrainDetailView(DetailView):
     queryset = Train.objects.all()

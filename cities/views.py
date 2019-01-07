@@ -9,6 +9,7 @@ from django.contrib import messages
 from .models import City
 from .forms import CityForm
 
+
 def home(request):
     # if request.method == 'POST':
     #     form = CityForm(request.POST or None)

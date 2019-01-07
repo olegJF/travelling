@@ -12,7 +12,6 @@ class Route(models.Model):
     def __str__(self):
         return self.name
 
-    
     class Meta:
         verbose_name = 'Маршрут'
         verbose_name_plural = 'Маршруты'

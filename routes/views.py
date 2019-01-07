@@ -9,6 +9,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from trains.models import Train
 from .forms import *
 
+
 def dfs_paths(graph, start, goal):
     """Функция поиска всех возможных маршрутов
        из одного города в другой. Вариант посещения
@@ -25,6 +26,7 @@ def dfs_paths(graph, start, goal):
                 else:
                     stack.append((next_, path + [next_]))
 
+
 def get_graph():
     qs = Train.objects.values('from_city')
     from_city_set = set(i['from_city'] for i in qs)
@@ -35,10 +37,13 @@ def get_graph():
         graph[city] = tmp
     
     return graph
+
+
 # @login_required(login_url='/login/')
 def home(request):
     form = RouteForm()
     return render(request, 'routes/home.html', {'form': form})
+
 
 def find_routes(request):
     if request.method == "POST":
@@ -87,9 +92,9 @@ def find_routes(request):
             cities = {'from_city': from_city.name, 'to_city': to_city.name}
             for tr in trains:
                 routes.append({'route': tr['trains'], 
-                                'total_time': tr['total_time'],
-                                'from_city': from_city.name,
-                                'to_city': to_city.name})
+                               'total_time': tr['total_time'],
+                               'from_city': from_city.name,
+                               'to_city': to_city.name})
             sorted_routes = []
             if len(routes) == 1:
                 sorted_routes = routes
@@ -113,6 +118,7 @@ def find_routes(request):
         form = RouteForm()
         return render(request, 'routes/home.html', {'form': form})
 
+
 def add_route(request):
     if request.method == 'POST':
         form = RouteModelForm(request.POST or None)
@@ -126,7 +132,7 @@ def add_route(request):
             trains = [int(x) for x in across_cities if x.isalnum()]
             qs = Train.objects.filter(id__in=trains)
             route = Route(name=name, from_city=from_city, 
-                    to_city=to_city, travel_times=travel_times)
+                          to_city=to_city, travel_times=travel_times)
             route.save()
             for tr in qs:
                 route.across_cities.add(tr.id)
@@ -143,19 +149,19 @@ def add_route(request):
             qs = Train.objects.filter(id__in=trains)
             train_list = ' '.join(str(i) for i in trains)
             form = RouteModelForm(initial={'from_city': from_city,
-                                            'to_city': to_city,
-                                            'travel_times': travel_times,
-                                            'across_cities': train_list})
+                                           'to_city': to_city,
+                                           'travel_times': travel_times,
+                                           'across_cities': train_list})
             route_desc = []
             for tr in qs:
                 dsc = '''Поезд №{}  следующий из г.{} в г.{} 
                     . Время в пути {}.'''.format(tr.name, tr.from_city, 
-                                                tr.to_city, tr.travel_time)
+                                                 tr.to_city, tr.travel_time)
                 route_desc.append(dsc)
             context = {'form': form, 'descr': route_desc,
-                        'from_city': from_city,
-                        'to_city': to_city,
-                        'travel_times': travel_times}
+                       'from_city': from_city,
+                       'to_city': to_city,
+                       'travel_times': travel_times}
             # assert False
             return render(request, 'routes/create.html', context)
         else:
