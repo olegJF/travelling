@@ -1,5 +1,6 @@
 astroid==2.1.0
 colorama==0.4.1
+coverage==4.5.2
 dj-database-url==0.5.0
 Django==2.1.4
 gunicorn==19.9.0
