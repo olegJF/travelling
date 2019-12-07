@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
-from .forms import UserLoginForm
+from .forms import UserLoginForm, UserRegistrationForm
 
 
 def home_view(request):
@@ -28,3 +28,15 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     return redirect('home')
+
+def register_view(request):
+    if request.method == 'POST':
+        user_form = UserRegistrationForm(request.POST)
+        if user_form.is_valid():
+            new_user = user_form.save(commit=False)
+            new_user.set_password(user_form.cleaned_data['password'])
+            new_user.save()
+            return render(request, 'register_done.html', {'new_user': new_user})
+    else:
+         user_form = UserRegistrationForm()
+         return render(request, 'register.html', {'form': user_form})
