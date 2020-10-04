@@ -12,13 +12,13 @@ class UserLoginForm(forms.Form):
         password = self.cleaned_data.get('password').strip()
         if username and password:
             qs = User.objects.filter(username=username)
-        if not qs.exists():
-            raise forms.ValidationError('Такого пользователя нет!')
-        if not check_password(password, qs[0].password):
-            raise forms.ValidationError('Пароль неверный!')
-        user = authenticate(username=username, password=password)
-        if not user:
-            raise forms.ValidationError('Данный аккаунт отключен')
+            if not qs.exists():
+                raise forms.ValidationError('Такого пользователя нет!')
+            if not check_password(password, qs[0].password):
+                raise forms.ValidationError('Пароль неверный!')
+            user = authenticate(username=username, password=password)
+            if not user:
+                raise forms.ValidationError('Данный аккаунт отключен')
         return super(UserLoginForm, self).clean(*args, **kwargs)
 
 
