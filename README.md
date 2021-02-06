@@ -19,4 +19,4 @@
 Доступ к добавлению\редактированию Поездов\Городов, а также  удалению любых записей, должен быть только у зарегистрированных пользователей.
 
 
-[Oбучающий видеокурс на ресурсе Udemy.com](https://www.udemy.com/creating-a-site-to-search-for-a-route-based-on-django/learn/v4/)
+[Oбучающий видеокурс на ресурсе Udemy.com](https://www.udemy.com/course/django-31-junior-django-developer/)
